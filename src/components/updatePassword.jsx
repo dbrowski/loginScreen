@@ -85,8 +85,6 @@ class PasswordEditor extends React.Component {
       this.setState({ isValidatingCredentials: true }, () => resolved())
     )
       .then(() => {
-        console.log("newP2");
-        console.log(newPassword);
         authActions.changeUserPassword(
           changePasswordUrl,
           "user",
