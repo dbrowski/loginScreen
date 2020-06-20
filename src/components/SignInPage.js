@@ -88,18 +88,6 @@ export default function SignInPage({
             Sign in
           </Typography>
           <form className={classes.form} noValidate>
-            {/* <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="email"
-              autoFocus
-              onChange={handleUsernameUpdate}
-            /> */}
             <EmailInput handleUsernameUpdate={handleUsernameUpdate} />
             <PasswordInput handlePasswordUpdate={handlePasswordUpdate} />
             <FormControlLabel
