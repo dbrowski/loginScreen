@@ -4,10 +4,11 @@ import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import { DropzoneArea } from "material-ui-dropzone";
 import { ColorExtractor } from "react-color-extractor";
-import { DragBox } from "./DragBox";
 import { Example } from "./Example";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+
+import Resizer from "react-image-file-resizer";
 
 export default function DragNDrop({ ...props }) {
   const [file, setFile] = useState(0);
@@ -25,6 +26,11 @@ export default function DragNDrop({ ...props }) {
           : theme.palette.grey[900],
       backgroundSize: "cover",
       backgroundPosition: "center",
+      height: "100%",
+    },
+    dropzoneAreaText: {
+      color: "#000000",
+      fontSize: "2rem",
     },
     image: {
       backgroundImage: file,
@@ -74,15 +80,19 @@ export default function DragNDrop({ ...props }) {
           xs={12}
           style={{
             overflow: "hidden",
+            height: "100%",
           }}
         >
           <DropzoneArea
+            dropzoneClass={classes.dropzoneArea}
+            dropzoneParagraphClass={"color: #000000, fontSize: 2rem"}
             showPreviews={false}
             showPreviewsInDropzone={false}
             acceptedFiles={["image/*"]}
             filesLimit={1}
             maxFileSize={50000000} // ~5GB
             onDrop={onDrop}
+            dropzoneText="Upload a Logo Image Here. Drag Image to Rearrange."
           />
         </Grid>
       );
@@ -94,8 +104,9 @@ export default function DragNDrop({ ...props }) {
       <Grid
         container
         display="flex"
+        wrap="wrap"
         spacing={0}
-        justify="center"
+        justify="flex-start"
         alignItems="stretch"
         style={{ height: "100%", maxHeight: "100%" }}
       >

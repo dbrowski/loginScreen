@@ -38,8 +38,6 @@ const CustomDragLayer = (props) => {
   function renderItem() {
     switch (itemType) {
       case ItemTypes.BOX:
-        console.log("in customdraglayer");
-        console.log(img);
         return <BoxDragPreview img={img} />;
       default:
         return null;

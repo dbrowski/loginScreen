@@ -1,7 +1,10 @@
 import React from "react";
+
 const styles = {
   padding: "0 0",
   cursor: "move",
+  height: "100%",
+  width: "auto",
 };
 export const Box = ({ img, yellow }) => {
   const backgroundColor = yellow ? "yellow" : "white";

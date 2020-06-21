@@ -8,7 +8,6 @@ import update from "immutability-helper";
 const styles = {
   width: "100%",
   height: "100%",
-  border: "1px solid black",
   position: "relative",
 };
 class Container extends React.PureComponent {
