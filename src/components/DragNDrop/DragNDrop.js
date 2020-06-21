@@ -27,6 +27,9 @@ export default function DragNDrop({ ...props }) {
       backgroundSize: "cover",
       backgroundPosition: "center",
       height: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     },
     dropzoneAreaText: {
       color: "#000000",
