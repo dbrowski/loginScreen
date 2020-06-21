@@ -75,11 +75,21 @@ export default function SignInPage({
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={6}>
+      <Grid item xs={false} sm={4} md={6} lg={8} xl={9}>
         <DragNDrop />
       </Grid>
 
-      <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={6}
+        lg={4}
+        xl={3}
+        component={Paper}
+        elevation={6}
+        square
+      >
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />

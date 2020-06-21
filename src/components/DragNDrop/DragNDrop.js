@@ -90,7 +90,7 @@ export default function DragNDrop({ ...props }) {
   };
 
   return (
-    <Container className={classes.root} disableGutters>
+    <Container className={classes.root} maxWidth={false} disableGutters>
       <Grid
         container
         display="flex"
