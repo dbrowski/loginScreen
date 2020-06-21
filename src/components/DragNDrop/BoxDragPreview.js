@@ -7,13 +7,13 @@ const styles = {
 };
 export const BoxDragPreview = ({ img }) => {
   const [tickTock, setTickTock] = useState(false);
-  useEffect(
+  useEffect(() => {
     function subscribeToIntervalTick() {
       const interval = setInterval(() => {
         setTickTock(!tickTock);
       }, 500);
       return () => clearInterval(interval);
-    },
+    }},
     [tickTock]
   );
   return (
