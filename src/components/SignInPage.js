@@ -15,19 +15,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import DragNDrop from "./DragNDrop/DragNDrop";
 import EmailInput from "./InputForm/EmailInput";
 import PasswordInput from "./InputForm/PasswordInput";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import ForgotPassword from "./InputForm/ForgotPassword";
+import NoAccount from "./InputForm/NoAccount";
+import Copyright from "./InputForm/Copyright";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,20 +106,22 @@ export default function SignInPage({
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2" onClick={handleForgotPassword}>
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2" onClick={handleRegister}>
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              <ForgotPassword handleForgotPassword={handleForgotPassword} />
+              <NoAccount handleRegister={handleRegister} />
+            </Grid>
+            <Grid
+              item
+              container
+              disableGutters
+              maxWidth={false}
+              direction="column"
+              justify="flex-end"
+              style={{ height: "45vh" }}
+            >
+              <Grid item zeroMinWidth>
+                <Copyright />
               </Grid>
             </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
           </form>
         </div>
       </Grid>
