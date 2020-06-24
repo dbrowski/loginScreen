@@ -49,15 +49,19 @@ export default function DragNDrop({ ...props }) {
     let newFile = { ...file };
     let uploadedFile = acceptedFiles[acceptedFiles.length - 1];
     if (uploadedFile) {
-      console.log(uploadedFile);
       newFile = URL.createObjectURL(uploadedFile);
       setFile(newFile);
     }
   };
 
+  // Change effect func for the scale slider below the image.
   const handleChange = (event, newValue) => {
     setScale(newValue);
   };
+
+  // Get the window height and width to use for the canvas size
+  const w = (window.innerWidth - 2);
+  const h = window.innerHeight - 2;
 
   const imgOrDropzone = () => {
     if (file) {
@@ -76,6 +80,8 @@ export default function DragNDrop({ ...props }) {
             <ReactAvatarEditor
               classes={classes.image}
               image={file}
+              width={w}
+              height={h}
               border={0}
               color={[255, 255, 255, 0.6]} // RGBA
               scale={scale / 100}
@@ -83,11 +89,13 @@ export default function DragNDrop({ ...props }) {
               style={{
                 minHeight: "100%",
                 minWidth: "100%",
+                width: "100%",
+                height: "100%",
                 overflow: "hidden",
               }}
             />
           </Grid>
-          <Grid item xs={12} style={{ height: "10%", maxHeight: "10%" }}>
+          <Grid item xs={12} style={{ height: "5%", maxHeight: "5%" }}>
             <Fab style={{ width: "100%" }}>
               <Slider
                 value={scale}
