@@ -16,6 +16,7 @@ export default function DragNDrop({ ...props }) {
   const useStyles = makeStyles((theme) => ({
     root: {
       height: "100%",
+      backgroundColor: "transparent"
     },
     dropzoneArea: {
       height: "100%",
@@ -44,7 +45,7 @@ export default function DragNDrop({ ...props }) {
 
   const classes = useStyles();
 
-  const onDrop = (acceptedFiles) => {
+  const onDropzoneChange = (acceptedFiles) => {
     // Do something with the files
     let newFile = { ...file };
     let uploadedFile = acceptedFiles[acceptedFiles.length - 1];
@@ -55,7 +56,7 @@ export default function DragNDrop({ ...props }) {
   };
 
   // Change effect func for the scale slider below the image.
-  const handleChange = (event, newValue) => {
+  const handleSliderChange = (event, newValue) => {
     setScale(newValue);
   };
 
@@ -66,15 +67,15 @@ export default function DragNDrop({ ...props }) {
   const imgOrDropzone = () => {
     if (file) {
       return (
-        <Grid item container display="flex" style={{ height: "100%" }}>
+        <Grid item container display="flex" style={{ height: "100%", maxHeight: "100%" }}>
           <Grid
             item
             xs={12}
             style={{
-              width: "100%",
-              maxWidth: "100%",
-              height: "95%",
-              maxHeight: "95%",
+              // width: "100%",
+              // maxWidth: "100%",
+              height: "90%",
+              maxHeight: "90%",
             }}
           >
             <ReactAvatarEditor
@@ -89,17 +90,16 @@ export default function DragNDrop({ ...props }) {
               style={{
                 minHeight: "100%",
                 minWidth: "100%",
-                width: "100%",
+                // width: "100%",
                 height: "100%",
-                overflow: "hidden",
               }}
             />
           </Grid>
-          <Grid item xs={12} style={{ height: "5%", maxHeight: "5%" }}>
+          <Grid item xs={12} style={{ height: "10%", maxHeight: "10%" }}>
             <Fab style={{ width: "100%" }}>
               <Slider
                 value={scale}
-                onChange={handleChange}
+                onChange={handleSliderChange}
                 min={10}
                 max={300}
                 aria-labelledby="continuous-slider"
@@ -118,7 +118,7 @@ export default function DragNDrop({ ...props }) {
         acceptedFiles={["image/*"]}
         filesLimit={1}
         maxFileSize={50000000} // ~5GB
-        onChange={onDrop}
+        onChange={onDropzoneChange}
         dropzoneText="Upload a Logo Image Here. Drag Image to Rearrange."
       />
     );
@@ -139,8 +139,10 @@ export default function DragNDrop({ ...props }) {
           item
           xs={12}
           style={{
-            overflow: "hidden",
+            // overflow: "hidden",
             position: "relative",
+            height: "100%",
+            maxHeight: "100%",
           }}
         >
           {imgOrDropzone()}

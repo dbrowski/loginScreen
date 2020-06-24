@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,6 +15,8 @@ import PasswordInput from "./InputForm/PasswordInput";
 import ForgotPassword from "./InputForm/ForgotPassword";
 import NoAccount from "./InputForm/NoAccount";
 import Copyright from "./InputForm/Copyright";
+import Slider from "@material-ui/core/Slider";
+import Fab from "@material-ui/core/Fab";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,10 +25,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     backgroundImage: "url(https://source.unsplash.com/random)",
     backgroundRepeat: "no-repeat",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
+    backgroundColor: "rgba(255, 255, 255, 1.0)",
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
@@ -35,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 1.0)",
+    // backgroundColor: "transparent",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -58,6 +59,11 @@ export default function SignInPage({
   handleRegister,
 }) {
   const classes = useStyles();
+  const [opacity, setOpacity] = useState(100);
+
+  const handleChange = (event, newValue) => {
+    setOpacity(newValue);
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -73,7 +79,8 @@ export default function SignInPage({
       >
         <DragNDrop />
       </Grid>
-
+      {console.log("render")}
+      {console.log(opacity)}
       <Grid
         item
         xs={12}
@@ -82,11 +89,21 @@ export default function SignInPage({
         lg={4}
         xl={3}
         component={Paper}
-        elevation={6}
+        elevation={24}
         square
-        style={{ maxHeight: "100%" }}
+        style={{
+          maxHeight: "90%",
+          zIndex: 1,
+          backgroundColor: "rgba(255, 255, 255, " + opacity / 100 + ")",
+        }}
       >
-        <div className={classes.paper}>
+        <div
+          className={classes.paper}
+          style={{
+            backgroundColor:
+              "rgba(255, 255, 255, " + (opacity - 70) / 100 + ")",
+          }}
+        >
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -114,6 +131,17 @@ export default function SignInPage({
             <Grid container>
               <ForgotPassword handleForgotPassword={handleForgotPassword} />
               <NoAccount handleRegister={handleRegister} />
+            </Grid>
+            <Grid item>
+              <Fab style={{ width: "100%" }}>
+                <Slider
+                  value={opacity}
+                  onChange={handleChange}
+                  min={0}
+                  max={100}
+                  aria-labelledby="continuous-slider"
+                />
+              </Fab>
             </Grid>
             <Grid
               item
