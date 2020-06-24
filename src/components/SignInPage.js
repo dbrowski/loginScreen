@@ -136,7 +136,7 @@ export default function SignInPage({
               <Fab style={{ width: "100%" }}>
                 <Slider
                   value={opacity}
-                  onChange={handleChange}
+                  onChangeCommitted={handleChange}
                   min={0}
                   max={100}
                   aria-labelledby="continuous-slider"
