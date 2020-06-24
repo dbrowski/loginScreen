@@ -126,30 +126,28 @@ export default function SignInPage({
             >
               Sign In
             </Button>
-            <Grid container>
-              <ForgotPassword handleForgotPassword={handleForgotPassword} />
-              <NoAccount handleRegister={handleRegister} />
+            <Grid item container>
+              <Grid item xs={6}>
+                <ForgotPassword handleForgotPassword={handleForgotPassword} />
+              </Grid>
+              <Grid item xs={6}>
+                <NoAccount handleRegister={handleRegister} />
+              </Grid>
             </Grid>
-            <Grid item>
-              <Fab style={{ width: "100%" }}>
-                <Slider
-                  value={opacity}
-                  onChange={handleChange}
-                  min={0}
-                  max={100}
-                  aria-labelledby="continuous-slider"
-                />
-              </Fab>
-            </Grid>
-            <Grid
-              item
-              container
-              maxwidth="false"
-              direction="column"
-              justify="flex-end"
-              style={{ height: "30vh", maxHeight: "30vh" }}
-            >
-              <Grid item zeroMinWidth>
+
+            <Grid container item direction="column" height="20vh" maxHeight="20vh" justify="space-around" style={{height: "25vh", maxHeight: "100%"}}>
+              <Grid item>
+                <Fab style={{ width: "100%" }}>
+                  <Slider
+                    value={opacity}
+                    onChange={handleChange}
+                    min={0}
+                    max={100}
+                    aria-labelledby="continuous-slider"
+                  />
+                </Fab>
+              </Grid>
+              <Grid item >
                 <Copyright />
               </Grid>
             </Grid>
