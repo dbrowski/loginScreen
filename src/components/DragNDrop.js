@@ -1,13 +1,16 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import { DropzoneArea } from "material-ui-dropzone";
 import { ColorExtractor } from "react-color-extractor";
 import ReactAvatarEditor from "react-avatar-editor";
+import Slider from "@material-ui/core/Slider";
+import Fab from "@material-ui/core/Fab";
 
 export default function DragNDrop({ ...props }) {
   const [file, setFile] = useState(0);
+  const [scale, setScale] = useState(120);
   const [colors, setColors] = useState(0);
 
   const useStyles = makeStyles((theme) => ({
@@ -35,23 +38,7 @@ export default function DragNDrop({ ...props }) {
           : theme.palette.grey[900],
       backgroundSize: "cover",
       backgroundPosition: "center",
-    },
-    paper: {
-      margin: theme.spacing(8, 4),
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: "100%", // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
+      width: "100%",
     },
   }));
 
@@ -68,19 +55,50 @@ export default function DragNDrop({ ...props }) {
     }
   };
 
+  const handleChange = (event, newValue) => {
+    setScale(newValue);
+  };
+
   const imgOrDropzone = () => {
     if (file) {
       return (
-        <ReactAvatarEditor
-          image={file}
-          width={500}
-          height={500}
-          border={0}
-          color={[255, 255, 255, 0.6]} // RGBA
-          scale={1.2}
-          rotate={0}
-          style={{ minHeight: "100%", minWidth: "100%" }}
-        />
+        <Grid item container display="flex" style={{ height: "100%" }}>
+          <Grid
+            item
+            xs={12}
+            style={{
+              width: "100%",
+              maxWidth: "100%",
+              height: "95%",
+              maxHeight: "95%",
+            }}
+          >
+            <ReactAvatarEditor
+              classes={classes.image}
+              image={file}
+              border={0}
+              color={[255, 255, 255, 0.6]} // RGBA
+              scale={scale / 100}
+              rotate={0}
+              style={{
+                minHeight: "100%",
+                minWidth: "100%",
+                overflow: "hidden",
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ height: "10%", maxHeight: "10%" }}>
+            <Fab style={{ width: "100%" }}>
+              <Slider
+                value={scale}
+                onChange={handleChange}
+                min={10}
+                max={300}
+                aria-labelledby="continuous-slider"
+              />
+            </Fab>
+          </Grid>
+        </Grid>
       );
     }
     return (
@@ -98,7 +116,6 @@ export default function DragNDrop({ ...props }) {
     );
   };
 
-
   return (
     <Container className={classes.root} maxWidth={false} disableGutters>
       <Grid
@@ -110,7 +127,14 @@ export default function DragNDrop({ ...props }) {
         alignItems="stretch"
         style={{ height: "100%", maxHeight: "100%" }}
       >
-        <Grid item xs={12} style={{ overflow: "hidden" }}>
+        <Grid
+          item
+          xs={12}
+          style={{
+            overflow: "hidden",
+            position: "relative",
+          }}
+        >
           {imgOrDropzone()}
         </Grid>
       </Grid>
