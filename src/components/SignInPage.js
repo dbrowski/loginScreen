@@ -21,6 +21,8 @@ import Fab from "@material-ui/core/Fab";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
+    fontWeight: 500,
+    fontColor: "white"
   },
   image: {
     backgroundImage: "url(https://source.unsplash.com/random)",
@@ -105,7 +107,7 @@ export default function SignInPage({
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" color={(opacity / 100) < .4 ? "secondary" : "primary"}>
             Sign in
           </Typography>
           <form className={classes.form} noValidate>
