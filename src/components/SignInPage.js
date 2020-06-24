@@ -79,8 +79,6 @@ export default function SignInPage({
       >
         <DragNDrop />
       </Grid>
-      {console.log("render")}
-      {console.log(opacity)}
       <Grid
         item
         xs={12}
