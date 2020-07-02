@@ -16,7 +16,7 @@ export default function DragNDrop({ ...props }) {
   const useStyles = makeStyles((theme) => ({
     root: {
       height: "100%",
-      backgroundColor: "transparent"
+      backgroundColor: "transparent",
     },
     dropzoneArea: {
       height: "100%",
@@ -40,6 +40,12 @@ export default function DragNDrop({ ...props }) {
       backgroundSize: "cover",
       backgroundPosition: "center",
       width: "100%",
+    },
+    slider: {
+      width: "100%",
+      backgroundColor: "transparent",
+      borderColor: "transparent",
+      boxShadow: "none",
     },
   }));
 
@@ -96,7 +102,7 @@ export default function DragNDrop({ ...props }) {
             />
           </Grid>
           <Grid item xs={12} style={{ height: "10%", maxHeight: "10%" }}>
-            <Fab style={{ width: "100%" }}>
+            <Fab className={classes.slider}>
               <Slider
                 value={scale}
                 onChange={handleSliderChange}
