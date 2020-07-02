@@ -59,6 +59,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  slider: {
+    width: "100%",
+    minWidth: "20vw",
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    boxShadow: "none",
+  },
 }));
 
 export default function SignInPage({
@@ -183,18 +190,22 @@ export default function SignInPage({
                   alignItems="center"
                   style={{ maxHeight: "100%", paddingTop: "1rem" }}
                 >
+                  {/* Transparency Slider */}
                   <Grid item container justify="center" alignContent="center">
-                    <Fab style={{ width: "100%", minWidth: "20vw" }}>
+                    <Fab
+                      className={classes.slider}
+                    >
                       <Slider
                         value={opacity}
                         onChange={handleChange}
+                        valueLabelDisplay="auto"
                         min={0}
                         max={100}
                         aria-labelledby="continuous-slider"
-                        style={{ backgroundColor: "transparent" }}
                       />
                     </Fab>
                   </Grid>
+                  {/* Copyright line */}
                   <Grid
                     item
                     container
@@ -204,6 +215,7 @@ export default function SignInPage({
                   >
                     <Copyright />
                   </Grid>
+                  {/* Move sign in form handle */}
                   <Grid
                     item
                     container
@@ -219,6 +231,7 @@ export default function SignInPage({
                       </Fab>
                     </Tooltip>
                   </Grid>
+                  {/* Help button */}
                   <Grid
                     item
                     justify="center"
