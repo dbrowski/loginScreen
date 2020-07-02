@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 1.0)",
+    backgroundColor: "transparent",
     // backgroundColor: "transparent",
   },
   avatar: {
@@ -236,6 +236,7 @@ export default function SignInPage({
                 {/* Help button */}
                 <Grid
                   item
+                  container
                   justify="center"
                   alignContent="center"
                   height="10%"

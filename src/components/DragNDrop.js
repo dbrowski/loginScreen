@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +11,8 @@ import Fab from "@material-ui/core/Fab";
 export default function DragNDrop({ ...props }) {
   const [file, setFile] = useState(0);
   const [scale, setScale] = useState(120);
-  const [colors, setColors] = useState(0);
+  const [colors, setColors] = useState([]);
+  const editor = useRef();
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,6 +52,48 @@ export default function DragNDrop({ ...props }) {
 
   const classes = useStyles();
 
+  const onClickSave = () => {
+    if (editor) {
+      // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
+      // drawn on another canvas, or added to the DOM.
+      const canvas = editor.getImage();
+
+      // If you want the image resized to the canvas size (also a HTMLCanvasElement)
+      const canvasScaled = editor.getImageScaledToCanvas();
+
+      const colorExtraction = () => {
+        return (
+          <ColorExtractor getColors={getColors}>
+            <img src={canvasScaled} />
+          </ColorExtractor>
+        );
+      };
+
+      console.log(colors);
+
+      colorExtraction();
+    }
+  };
+
+  const getColors = (c) => {
+    colors.push([...c]);
+  };
+
+  const renderSwatches = () => {
+    return colors.map((color, id) => {
+      return (
+        <div
+          key={id}
+          style={{
+            backgroundColor: color,
+            width: 100,
+            height: 100,
+          }}
+        />
+      );
+    });
+  };
+
   const onDropzoneChange = (acceptedFiles) => {
     // Do something with the files
     let newFile = { ...file };
@@ -67,13 +110,18 @@ export default function DragNDrop({ ...props }) {
   };
 
   // Get the window height and width to use for the canvas size
-  const w = (window.innerWidth - 2);
+  const w = window.innerWidth - 2;
   const h = window.innerHeight - 2;
 
   const imgOrDropzone = () => {
     if (file) {
       return (
-        <Grid item container display="flex" style={{ height: "100%", maxHeight: "100%" }}>
+        <Grid
+          item
+          container
+          display="flex"
+          style={{ height: "100%", maxHeight: "100%" }}
+        >
           <Grid
             item
             xs={12}
@@ -85,7 +133,9 @@ export default function DragNDrop({ ...props }) {
             }}
           >
             <ReactAvatarEditor
+              ref={editor}
               classes={classes.image}
+              onLoadSuccess={onClickSave}
               image={file}
               width={w}
               height={h}
@@ -93,12 +143,6 @@ export default function DragNDrop({ ...props }) {
               color={[255, 255, 255, 0.6]} // RGBA
               scale={scale / 100}
               rotate={0}
-              style={{
-                minHeight: "100%",
-                minWidth: "100%",
-                // width: "100%",
-                height: "100%",
-              }}
             />
           </Grid>
           <Grid item xs={12} style={{ height: "10%", maxHeight: "10%" }}>
@@ -112,6 +156,9 @@ export default function DragNDrop({ ...props }) {
               />
             </Fab>
           </Grid>
+          <Grid item xs={12} style={{ height: "10%", maxHeight: "10%" }}>
+            {renderSwatches()}
+          </Grid>
         </Grid>
       );
     }
@@ -124,7 +171,7 @@ export default function DragNDrop({ ...props }) {
         acceptedFiles={["image/*"]}
         filesLimit={1}
         maxFileSize={50000000} // ~5GB
-        onChange={onDropzoneChange}
+        onChange={!file ? onDropzoneChange : null}
         dropzoneText="Upload a Logo Image Here. Drag Image to Rearrange."
       />
     );

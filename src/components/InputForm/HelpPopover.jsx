@@ -34,7 +34,7 @@ export default function HelpPopover() {
     <>
       <Button
         aria-describedby={id}
-        variant="outine"
+        variant="outlined"
         color="primary"
         onClick={handleClick}
       >
