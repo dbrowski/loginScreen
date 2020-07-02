@@ -21,6 +21,7 @@ import Draggable, { DraggableCore } from "react-draggable"; // Both at the same 
 import HelpPopover from "./InputForm/HelpPopover";
 import AddIcon from "@material-ui/icons/Add";
 import PanToolIcon from "@material-ui/icons/PanTool";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -180,9 +181,9 @@ export default function SignInPage({
                   justify="space-around"
                   wrap="nowrap"
                   alignItems="center"
-                  style={{ maxHeight: "100%" }}
+                  style={{ maxHeight: "100%", paddingTop: "1rem" }}
                 >
-                  <Grid item width="100%" style={{ paddingTop: "1rem" }}>
+                  <Grid item container justify="center" alignContent="center">
                     <Fab style={{ width: "100%", minWidth: "20vw" }}>
                       <Slider
                         value={opacity}
@@ -194,27 +195,44 @@ export default function SignInPage({
                       />
                     </Fab>
                   </Grid>
-                  <Grid item style={{ paddingTop: "1rem" }}>
+                  <Grid
+                    item
+                    container
+                    justify="center"
+                    alignContent="center"
+                    style={{ paddingTop: "1rem" }}
+                  >
                     <Copyright />
                   </Grid>
                   <Grid
                     item
-                    className="handle"
+                    container
+                    justify="center"
                     alignContent="center"
+                    className="handle"
                     height="1vh"
                     style={{ paddingTop: "1rem" }}
                   >
-                    <Fab size="small" color="primary" aria-label="add">
-                      <PanToolIcon />
-                    </Fab>
+                    <Tooltip title="Drag Me!">
+                      <Fab size="small" color="primary" aria-label="add">
+                        <PanToolIcon />
+                      </Fab>
+                    </Tooltip>
+                  </Grid>
+                  <Grid
+                    item
+                    justify="center"
+                    alignContent="center"
+                    height="10%"
+                    width="100%"
+                    style={{ paddingTop: "2rem" }}
+                  >
+                    {/* */}
+                    <HelpPopover />
                   </Grid>
                 </Grid>
               </form>
             </div>
-          </Grid>
-          <Grid item justify="center" alignContent="center" height="10%" width="100%">
-            {/* */}
-            <HelpPopover />
           </Grid>
         </Grid>
       </Draggable>
