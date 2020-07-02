@@ -21,6 +21,8 @@ import Draggable, { DraggableCore } from "react-draggable"; // Both at the same 
 import HelpPopover from "./InputForm/HelpPopover";
 import AddIcon from "@material-ui/icons/Add";
 import PanToolIcon from "@material-ui/icons/PanTool";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +62,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightRegular,
   },
   extraSection: {
-    maxHeight: "90%",
+    maxHeight: "30%",
+    height: "30%",
     paddingTop: "1rem",
   },
   slider: {
@@ -157,7 +160,15 @@ export default function SignInPage({
                 handlePasswordUpdate={handlePasswordUpdate}
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={
+                  <Checkbox
+                    value="remember"
+                    color="primary"
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    name="checkedI"
+                  />
+                }
                 label="Remember me"
               />
               <Button
@@ -204,12 +215,7 @@ export default function SignInPage({
                   </Fab>
                 </Grid>
                 {/* Copyright line */}
-                <Grid
-                  item
-                  container
-                  justify="center"
-                  alignContent="center"
-                >
+                <Grid item container justify="center" alignContent="center">
                   <Copyright />
                 </Grid>
                 {/* Move sign in form handle */}

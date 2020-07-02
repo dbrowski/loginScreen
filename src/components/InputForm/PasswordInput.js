@@ -13,6 +13,7 @@ export default function PasswordInput(props) {
       label="Password"
       type="password"
       id="password"
+      size="small"
       autoComplete="current-password"
       onChange={props.handlePasswordUpdate}
       style={{ backgroundColor: "rgba(255, 255, 255, .4" }}
