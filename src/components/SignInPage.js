@@ -107,12 +107,22 @@ export default function SignInPage({
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" color={(opacity / 100) < .4 ? "secondary" : "primary"}>
+          <Typography
+            component="h1"
+            variant="h5"
+            color={opacity / 100 < 0.4 ? "secondary" : "primary"}
+          >
             Sign in
           </Typography>
           <form className={classes.form} noValidate>
-            <EmailInput handleUsernameUpdate={handleUsernameUpdate} />
-            <PasswordInput handlePasswordUpdate={handlePasswordUpdate} />
+            <EmailInput
+              color={opacity / 100 < 0.4 ? "secondary" : "primary"}
+              handleUsernameUpdate={handleUsernameUpdate}
+            />
+            <PasswordInput
+              color={opacity / 100 < 0.4 ? "secondary" : "primary"}
+              handlePasswordUpdate={handlePasswordUpdate}
+            />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -137,7 +147,15 @@ export default function SignInPage({
               </Grid>
             </Grid>
 
-            <Grid container item direction="column" height="20vh" maxHeight="20vh" justify="space-around" style={{height: "25vh", maxHeight: "100%"}}>
+            <Grid
+              container
+              item
+              direction="column"
+              height="20vh"
+              maxHeight="20vh"
+              justify="space-around"
+              style={{ height: "25vh", maxHeight: "100%" }}
+            >
               <Grid item>
                 <Fab style={{ width: "100%" }}>
                   <Slider
@@ -146,10 +164,11 @@ export default function SignInPage({
                     min={0}
                     max={100}
                     aria-labelledby="continuous-slider"
+                    style={{backgroundColor: "transparent"}}
                   />
                 </Fab>
               </Grid>
-              <Grid item >
+              <Grid item>
                 <Copyright />
               </Grid>
             </Grid>
