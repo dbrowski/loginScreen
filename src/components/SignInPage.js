@@ -59,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  extraSection: {
+    maxHeight: "90%",
+    paddingTop: "1rem",
+  },
   slider: {
     width: "100%",
     minWidth: "20vw",
@@ -127,125 +131,115 @@ export default function SignInPage({
             backgroundColor: "rgba(255, 255, 255, " + opacity / 100 + ")",
           }}
         >
-          <Grid item height="90%">
-            <div
-              className={classes.paper}
-              style={{
-                backgroundColor:
-                  "rgba(255, 255, 255, " + (opacity - 70) / 100 + ")",
-              }}
+          <Grid
+            item
+            className={classes.paper}
+            height="90%"
+            style={{ maxHeight: "90%" }}
+          >
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography
+              component="h1"
+              variant="h5"
+              color={opacity / 100 < 0.4 ? "secondary" : "primary"}
             >
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography
-                component="h1"
-                variant="h5"
+              Sign in
+            </Typography>
+            <form className={classes.form} noValidate>
+              <EmailInput
                 color={opacity / 100 < 0.4 ? "secondary" : "primary"}
+                handleUsernameUpdate={handleUsernameUpdate}
+              />
+              <PasswordInput
+                color={opacity / 100 < 0.4 ? "secondary" : "primary"}
+                handlePasswordUpdate={handlePasswordUpdate}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="button"
+                data-id="user-credentials-submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={handleSubmit}
               >
-                Sign in
-              </Typography>
-              <form className={classes.form} noValidate>
-                <EmailInput
-                  color={opacity / 100 < 0.4 ? "secondary" : "primary"}
-                  handleUsernameUpdate={handleUsernameUpdate}
-                />
-                <PasswordInput
-                  color={opacity / 100 < 0.4 ? "secondary" : "primary"}
-                  handlePasswordUpdate={handlePasswordUpdate}
-                />
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                />
-                <Button
-                  type="button"
-                  data-id="user-credentials-submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={handleSubmit}
-                >
-                  Sign In
-                </Button>
-                <Grid item container>
-                  <Grid item xs={6}>
-                    <ForgotPassword
-                      handleForgotPassword={handleForgotPassword}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <NoAccount handleRegister={handleRegister} />
-                  </Grid>
+                Sign In
+              </Button>
+              <Grid item container>
+                <Grid item xs={6}>
+                  <ForgotPassword handleForgotPassword={handleForgotPassword} />
                 </Grid>
+                <Grid item xs={6}>
+                  <NoAccount handleRegister={handleRegister} />
+                </Grid>
+              </Grid>
 
-                <Grid
-                  container
-                  item
-                  direction="column"
-                  // height="20vh"
-                  justify="space-around"
-                  wrap="nowrap"
-                  alignItems="center"
-                  style={{ maxHeight: "100%", paddingTop: "1rem" }}
-                >
-                  {/* Transparency Slider */}
-                  <Grid item container justify="center" alignContent="center">
-                    <Fab
-                      className={classes.slider}
-                    >
-                      <Slider
-                        value={opacity}
-                        onChange={handleChange}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={100}
-                        aria-labelledby="continuous-slider"
-                      />
-                    </Fab>
-                  </Grid>
-                  {/* Copyright line */}
-                  <Grid
-                    item
-                    container
-                    justify="center"
-                    alignContent="center"
-                    style={{ paddingTop: "1rem" }}
-                  >
-                    <Copyright />
-                  </Grid>
-                  {/* Move sign in form handle */}
-                  <Grid
-                    item
-                    container
-                    justify="center"
-                    alignContent="center"
-                    className="handle"
-                    height="1vh"
-                    style={{ paddingTop: "1rem" }}
-                  >
-                    <Tooltip title="Drag Me!">
-                      <Fab size="small" color="primary" aria-label="add">
-                        <PanToolIcon />
-                      </Fab>
-                    </Tooltip>
-                  </Grid>
-                  {/* Help button */}
-                  <Grid
-                    item
-                    justify="center"
-                    alignContent="center"
-                    height="10%"
-                    width="100%"
-                    style={{ paddingTop: "2rem" }}
-                  >
-                    {/* */}
-                    <HelpPopover />
-                  </Grid>
+              <Grid
+                container
+                item
+                direction="column"
+                justify="space-around"
+                wrap="nowrap"
+                alignItems="center"
+                spacing={1}
+                className={classes.extraSection}
+              >
+                {/* Transparency Slider */}
+                <Grid item container justify="center" alignContent="center">
+                  <Fab className={classes.slider}>
+                    <Slider
+                      value={opacity}
+                      onChange={handleChange}
+                      valueLabelDisplay="auto"
+                      min={0}
+                      max={100}
+                      aria-labelledby="continuous-slider"
+                    />
+                  </Fab>
                 </Grid>
-              </form>
-            </div>
+                {/* Copyright line */}
+                <Grid
+                  item
+                  container
+                  justify="center"
+                  alignContent="center"
+                >
+                  <Copyright />
+                </Grid>
+                {/* Move sign in form handle */}
+                <Grid
+                  item
+                  container
+                  justify="center"
+                  alignContent="center"
+                  className="handle"
+                  height="1vh"
+                >
+                  <Tooltip title="Drag Me!">
+                    <Fab size="small" color="primary" aria-label="add">
+                      <PanToolIcon />
+                    </Fab>
+                  </Tooltip>
+                </Grid>
+                {/* Help button */}
+                <Grid
+                  item
+                  justify="center"
+                  alignContent="center"
+                  height="10%"
+                  width="100%"
+                >
+                  {/* */}
+                  <HelpPopover />
+                </Grid>
+              </Grid>
+            </form>
           </Grid>
         </Grid>
       </Draggable>
