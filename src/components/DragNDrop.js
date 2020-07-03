@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, withStyles } from "react";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,17 +7,24 @@ import { ColorExtractor } from "react-color-extractor";
 import ReactAvatarEditor from "react-avatar-editor";
 import Slider from "@material-ui/core/Slider";
 import Fab from "@material-ui/core/Fab";
+import Button from "@material-ui/core/Button";
 
 export default function DragNDrop({ ...props }) {
   const [file, setFile] = useState(0);
   const [scale, setScale] = useState(120);
   const [colors, setColors] = useState([]);
   const editor = useRef();
+  const [img, setImg] = useState();
+  const [signInColor, setSignInColor] = useState("transparent");
+
+  // Get the window height and width to use for the canvas size
+  const w = window.innerWidth - 2;
+  const h = window.innerHeight - 2;
 
   const useStyles = makeStyles((theme) => ({
     root: {
       height: "100%",
-      backgroundColor: "transparent",
+      backgroundColor: signInColor,
     },
     dropzoneArea: {
       height: "100%",
@@ -52,46 +59,47 @@ export default function DragNDrop({ ...props }) {
 
   const classes = useStyles();
 
+  const getColors = (c) => {
+    setColors(c);
+  };
+
+  // if need canvas, use here
   const onClickSave = () => {
     if (editor) {
+      const ed = editor.current;
       // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
       // drawn on another canvas, or added to the DOM.
-      const canvas = editor.getImage();
+
+      const canvas = ed.getImage();
 
       // If you want the image resized to the canvas size (also a HTMLCanvasElement)
-      const canvasScaled = editor.getImageScaledToCanvas();
-
-      const colorExtraction = () => {
-        return (
-          <ColorExtractor getColors={getColors}>
-            <img src={canvasScaled} />
-          </ColorExtractor>
-        );
-      };
-
-      console.log(colors);
-
-      colorExtraction();
+      const canvasScaled = ed.getImageScaledToCanvas();
     }
   };
 
-  const getColors = (c) => {
-    colors.push([...c]);
+  const onClick = (e) => {
+    const bgColor = e.target.style.backgroundColor;
+    console.log(bgColor);
+    props.setSignInColor(bgColor);
   };
 
   const renderSwatches = () => {
-    return colors.map((color, id) => {
-      return (
-        <div
-          key={id}
-          style={{
-            backgroundColor: color,
-            width: 100,
-            height: 100,
-          }}
-        />
-      );
-    });
+    if (colors) {
+      return colors.map((color, id) => {
+        return (
+          <Grid item xs={1} key={id}>
+            <Button
+              onClick={onClick}
+              style={{
+                backgroundColor: color,
+                width: "1rem",
+                height: "1rem",
+              }}
+            ></Button>
+          </Grid>
+        );
+      });
+    }
   };
 
   const onDropzoneChange = (acceptedFiles) => {
@@ -109,9 +117,6 @@ export default function DragNDrop({ ...props }) {
     setScale(newValue);
   };
 
-  // Get the window height and width to use for the canvas size
-  const w = window.innerWidth - 2;
-  const h = window.innerHeight - 2;
 
   const imgOrDropzone = () => {
     if (file) {
@@ -126,10 +131,8 @@ export default function DragNDrop({ ...props }) {
             item
             xs={12}
             style={{
-              // width: "100%",
-              // maxWidth: "100%",
-              height: "90%",
-              maxHeight: "90%",
+              height: "80%",
+              maxHeight: "80%",
             }}
           >
             <ReactAvatarEditor
@@ -145,7 +148,7 @@ export default function DragNDrop({ ...props }) {
               rotate={0}
             />
           </Grid>
-          <Grid item xs={12} style={{ height: "10%", maxHeight: "10%" }}>
+          <Grid item xs={12}>
             <Fab className={classes.slider}>
               <Slider
                 value={scale}
@@ -156,8 +159,14 @@ export default function DragNDrop({ ...props }) {
               />
             </Fab>
           </Grid>
-          <Grid item xs={12} style={{ height: "10%", maxHeight: "10%" }}>
-            {renderSwatches()}
+
+          {/* Color extraction boxes */}
+          <Grid item container xs={12}>
+            <ColorExtractor src={file} getColors={getColors} />
+
+            <Grid item container xs={12}>
+              {renderSwatches()}
+            </Grid>
           </Grid>
         </Grid>
       );
@@ -190,6 +199,7 @@ export default function DragNDrop({ ...props }) {
       >
         <Grid
           item
+          container
           xs={12}
           style={{
             // overflow: "hidden",

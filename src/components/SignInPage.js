@@ -25,56 +25,6 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import Tooltip from "@material-ui/core/Tooltip";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: "100vh",
-    fontWeight: 500,
-    fontColor: "white",
-  },
-  image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
-    backgroundRepeat: "no-repeat",
-    backgroundColor: "rgba(255, 255, 255, 1.0)",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "transparent",
-    // backgroundColor: "transparent",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-  extraSection: {
-    maxHeight: "30%",
-    height: "30%",
-    paddingTop: "1rem",
-  },
-  slider: {
-    width: "100%",
-    minWidth: "20vw",
-    backgroundColor: "transparent",
-    borderColor: "transparent",
-    boxShadow: "none",
-  },
-}));
-
 export default function SignInPage({
   handleUsernameUpdate,
   handlePasswordUpdate,
@@ -83,11 +33,119 @@ export default function SignInPage({
   handlePasswordReset,
   handleRegister,
 }) {
-  const classes = useStyles();
   const [opacity, setOpacity] = useState(100);
+  const [signInBGColor, setSignInBGColor] = useState("rgb(255, 255, 255)");
+  const [colorWithoutAlpha, setColorWithoutAlpha] = useState("rgb(255, 255, 255, ");
+
+  // handles bg color change when opacity slider is used
+  useEffect(() => {
+    const opacityScaled = Number(opacity) / 100;
+    const newBGColor = colorWithoutAlpha + opacityScaled + ")";
+    setSignInBGColor(newBGColor);
+    console.log("opacity change");
+  });
+
+  const adjustRGBOpacity = (color) => {
+    // expects color in the form of rgb(###, ###, ###)
+    if (color) {
+      const colors = color.split(",");
+      // includes "rgb(", will need to chop it off before using
+      const first = colors[0];
+      const second = colors[1];
+      // strip off the ")"
+      const third = colors[2].split(")")[0];
+      // make sure we get a number for the color values
+      // chop off "rgb(" from the front
+      const r = parseInt(first.slice(4));
+      const g = parseInt(second);
+      const b = parseInt(third);
+      if (r < 0) {
+        console.err("r is not a positive number");
+        const adjWhite = "rgba(255, 255, 255, " + opacity;
+        setSignInBGColor(adjWhite);
+        return adjWhite;
+      }
+      if (g < 0) {
+        console.err("g is not a positive number");
+        const adjWhite = "rgba(255, 255, 255, " + opacity;
+        setSignInBGColor(adjWhite);
+        return adjWhite;
+      }
+      if (b < 0) {
+        console.err("b is not a positive number");
+        const adjWhite = "rgba(255, 255, 255, " + opacity;
+        setSignInBGColor(adjWhite);
+        return adjWhite;
+      }
+
+      const opacityScaled = Number(opacity) / 100;
+      const adjColor = "rgba(" + r + ", " + g + ", " + b + ", " + opacityScaled + ")";
+      setColorWithoutAlpha("rgba(" + r + ", " + g + ", " + b + ", ");
+      console.log(adjColor);
+
+      setSignInBGColor(adjColor);
+      return adjColor;
+    }
+  };
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      height: "100vh",
+      fontWeight: 500,
+      fontColor: "white",
+      backgroundColor: signInBGColor,
+    },
+    image: {
+      backgroundImage: "url(https://source.unsplash.com/random)",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    },
+    paper: {
+      margin: theme.spacing(8, 4),
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      // backgroundColor: signInBGColor,
+      backgroundColor: "transparent",
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: "100%", // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+    extraSection: {
+      maxHeight: "30%",
+      height: "30%",
+      paddingTop: "1rem",
+    },
+    slider: {
+      width: "100%",
+      minWidth: "20vw",
+      backgroundColor: "transparent",
+      borderColor: "transparent",
+      boxShadow: "none",
+    },
+  }));
+
+  const classes = useStyles();
 
   const handleChange = (event, newValue) => {
     setOpacity(newValue);
+  };
+
+  const handleOnClick = (newValue) => {
+    setSignInBGColor(adjustRGBOpacity(newValue));
   };
 
   return (
@@ -102,7 +160,7 @@ export default function SignInPage({
         xl={9}
         style={{ maxHeight: "100%" }}
       >
-        <DragNDrop />
+        <DragNDrop setSignInColor={handleOnClick} />
       </Grid>
       <Draggable
         axis="both"
@@ -131,7 +189,7 @@ export default function SignInPage({
           style={{
             maxHeight: "80vh",
             zIndex: 1,
-            backgroundColor: "rgba(255, 255, 255, " + opacity / 100 + ")",
+            backgroundColor: signInBGColor,
           }}
         >
           <Grid
