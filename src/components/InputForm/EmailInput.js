@@ -9,11 +9,14 @@ export default function EmailInput(props) {
       required
       fullWidth
       id="username"
+      color={props.color}
       label="Username"
       name="username"
       autoComplete="email"
       autoFocus
+      size="small"
       onChange={props.handleUsernameUpdate}
+      style={{backgroundColor: "rgba(255, 255, 255, .4"}}
     />
   );
 }

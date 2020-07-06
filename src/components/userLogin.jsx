@@ -65,9 +65,6 @@ class UserLogin extends React.Component {
       return;
     }
 
-    console.log("validatePasswordUrl");
-    console.log(validatePasswordUrl);
-
     return authActions
       .signOn(validatePasswordUrl, this.state.username, this.state.password)
       .then((newflow) => {
@@ -247,7 +244,7 @@ class UserLogin extends React.Component {
       );
 
       return (
-        <Container display="flex" disableGutters>
+        <Container display="flex" maxWidth={false} disableGutters>
           {redirect}
           {alert}
 

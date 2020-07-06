@@ -94,8 +94,6 @@ class Auth extends React.Component {
     const message = _.get(authState, "message", null);
 
     if (flow && (flow.isCompleted() || flow.isFailed())) {
-      console.log("flow.resumeUrl");
-      console.log(flow.resumeUrl);
       // Redirect to the resume endpoint
       window.location.assign(flow.resumeUrl);
       window.history.replaceState({}, "", "#done");
